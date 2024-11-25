@@ -1,0 +1,91 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f7f7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#todo-app {
+    width: 100%;
+    max-width: 400px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+header {
+    padding: 16px;
+
+    color: #ffffff;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.5em;
+}
+
+.todo {
+    display: flex;
+}
+
+header input {
+    width: calc(100% - 80px);
+    padding: 8px;
+    margin-top: 8px;
+    border-radius: 4px;
+}
+
+header button {
+    width: 70px;
+    margin-left: 8px;
+    padding: 4px;
+    background-color: #843cda;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+header button:hover {
+    background-color: #843cda;
+}
+
+main {
+    padding: 16px;
+}
+
+#task-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#task-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.completed {
+    text-decoration: line-through;
+    color: #888888;
+}
+
+
+.delete-btn {
+    background: red;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    background: darkred;
+}
