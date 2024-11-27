@@ -6,7 +6,6 @@ class View {
     }
 
     addAddTaskListener(callback) {
-        // Для добавления задачи по нажатию Enter
         this.newTaskInput.addEventListener('keydown', (event) => {
             if (event.key === 'Enter') {
                 const taskText = this.newTaskInput.value.trim();
