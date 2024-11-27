@@ -7,13 +7,10 @@ class Model {
         const task = {
             id: Date.now(),
             text: taskText,
-            completed: false
+            completed: false,
+            createdAt: new Date().toLocaleString(),
         };
         this.tasks.push(task);
-    }
-
-    getTasks() {
-        return this.tasks;
     }
 
     removeTask(taskId) {
@@ -26,4 +23,19 @@ class Model {
             task.completed = !task.completed;
         }
     }
+
+    getTasks() {
+        return this.tasks;
+    }
+
+    getCompletedTasks() {
+        return this.tasks.filter(task => task.completed);
+    }
+
+    deleteAllTasks() {
+        this.tasks = [];
+    }
 }
+
+
+
