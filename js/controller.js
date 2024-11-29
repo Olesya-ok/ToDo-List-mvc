@@ -1,4 +1,3 @@
-
 class Controller {
     constructor(model, view) {
         this.model = model;
@@ -8,6 +7,7 @@ class Controller {
         this.view.addAddTaskListener(this.addTask.bind(this));
         this.view.addDeleteTaskListener(this.removeTask.bind(this));
         this.view.addToggleCompletionListener(this.toggleTaskCompletion.bind(this));
+        this.view.addEditTaskListener(this.editTask.bind(this)); // Обработчик редактирования
 
         this.view.addShowAllTasksListener(this.showAllTasks.bind(this));
         this.view.addShowCheckedTasksListener(this.showUncheckedTasks.bind(this));
@@ -18,8 +18,9 @@ class Controller {
     }
 
     // Добавление новой задачи
-    addTask(taskText) {
-        this.model.addTask(taskText);
+    addTask(taskText, deadline) {
+        console.log('Adding task:', taskText, deadline); // Debugging
+        this.model.addTask(taskText, deadline);
         this.updateView();
     }
 
@@ -35,6 +36,18 @@ class Controller {
         this.updateView();
     }
 
+    // Редактирование задачи
+    editTask(taskId) {
+        const task = this.model.getTasks().find(t => t.id === taskId);
+        if (task) {
+            const newText = prompt("Edit task text:", task.text);
+            if (newText && newText.trim() !== "") {
+                this.model.updateTaskText(taskId, newText);
+                this.updateView();
+            }
+        }
+    }
+
     // Показ всех задач
     showAllTasks() {
         const tasks = this.model.getTasks();
@@ -42,11 +55,10 @@ class Controller {
     }
 
     showUncheckedTasks() {
-        const tasks = this.model.getTasks().filter(task => !task.completed); // Фильтруем невыполненные задачи
-        this.view.render(tasks); // Отображаем только невыполненные задачи
+        const tasks = this.model.getTasks().filter(task => !task.completed);
+        this.view.render(tasks);
     }
 
-    // Удаление всех задач
     deleteAllTasks() {
         this.model.deleteAllTasks();
         this.updateView();
@@ -59,6 +71,7 @@ class Controller {
     }
 }
 
+
 // Инициализация
 const model = new Model();
 const view = new View();
@@ -69,8 +82,7 @@ function updateCurrentTime() {
     const now = new Date();
     const hours = String(now.getHours()).padStart(2, '0');
     const minutes = String(now.getMinutes()).padStart(2, '0');
-    const seconds = String(now.getSeconds()).padStart(2, '0');
-    timeContainer.textContent = `${hours}:${minutes}:${seconds}`;
+    timeContainer.textContent = `${hours}:${minutes}`;
 }
 
 // Запускаем обновление времени каждую секунду

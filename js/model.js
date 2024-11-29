@@ -3,12 +3,14 @@ class Model {
         this.tasks = [];
     }
 
-    addTask(taskText) {
+    addTask(taskText, deadline) {
         const task = {
             id: Date.now(),
             text: taskText,
             completed: false,
             createdAt: new Date().toLocaleString(),
+            deadline: deadline, // сохраняем дедлайн
+            isOverdue: false
         };
         this.tasks.push(task);
     }
@@ -25,11 +27,20 @@ class Model {
     }
 
     getTasks() {
+        // Обновляем статус просроченности для каждой задачи
+        this.tasks.forEach(task => {
+            if (task.deadline) {
+                task.isOverdue = new Date(task.deadline) < new Date() && !task.completed;
+            }
+        });
         return this.tasks;
     }
 
-    getCompletedTasks() {
-        return this.tasks.filter(task => task.completed);
+    updateTaskText(taskId, newText) {
+        const task = this.tasks.find(task => task.id === taskId);
+        if (task) {
+            task.text = newText;
+        }
     }
 
     deleteAllTasks() {
