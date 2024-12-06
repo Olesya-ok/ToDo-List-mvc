@@ -1,6 +1,15 @@
 class Model {
     constructor() {
-        this.tasks = [];
+        this.tasks = this.loadFromLocalStorage();
+    }
+
+    loadFromLocalStorage() {
+        const tasksJSON = localStorage.getItem('tasks');
+        return tasksJSON ? JSON.parse(tasksJSON) : [];
+    }
+
+    saveToLocalStorage() {
+        localStorage.setItem('tasks', JSON.stringify(this.tasks));
     }
 
     addTask(taskText, deadline) {
@@ -13,16 +22,19 @@ class Model {
             isOverdue: false
         };
         this.tasks.push(task);
+        this.saveToLocalStorage();
     }
 
     removeTask(taskId) {
         this.tasks = this.tasks.filter(task => task.id !== taskId);
+        this.saveToLocalStorage();
     }
 
     toggleTaskCompletion(taskId) {
         const task = this.tasks.find(task => task.id === taskId);
         if (task) {
             task.completed = !task.completed;
+            this.saveToLocalStorage();
         }
     }
 
@@ -40,11 +52,13 @@ class Model {
         const task = this.tasks.find(task => task.id === taskId);
         if (task) {
             task.text = newText;
+            this.saveToLocalStorage();
         }
     }
 
     deleteAllTasks() {
         this.tasks = [];
+        this.saveToLocalStorage();
     }
 }
 

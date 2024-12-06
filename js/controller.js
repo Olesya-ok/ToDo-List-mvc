@@ -17,6 +17,12 @@ class Controller {
         this.updateView();
     }
 
+    // Обновление всего представления
+    updateView() {
+        const tasks = this.model.getTasks();
+        this.view.render(tasks);
+    }
+
     // Добавление новой задачи
     addTask(taskText, deadline) {
         console.log('Adding task:', taskText, deadline); // Debugging
@@ -64,11 +70,7 @@ class Controller {
         this.updateView();
     }
 
-    // Обновление всего представления
-    updateView() {
-        const tasks = this.model.getTasks();
-        this.view.render(tasks);
-    }
+
 }
 
 
